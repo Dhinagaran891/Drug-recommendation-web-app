@@ -1,0 +1,60 @@
+<!-- project-folder/templates/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSV Data Viewer</title>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc0/dist/js/select2.min.js"></script>
+    <style>
+        /* Add any additional styling here */
+    </style>
+</head>
+<body>
+
+<h1>CSV Data Viewer</h1>
+
+<form id="columnForm">
+    <label for="columns">Select Columns:</label>
+    <select id="columns" multiple="multiple" style="width: 100%;">
+        <!-- Dynamically populated with column names -->
+    </select>
+    <br>
+    <button type="button" onclick="getData()">Get Data</button>
+</form>
+
+<div id="result"></div>
+
+<script>
+    // Fetch column names and populate the multiselect dropdown with tagging/search bar
+    $(document).ready(function() {
+        $.get('/get_columns', function(data) {
+            var columns = JSON.parse(data);
+            var select = $('#columns');
+        
+            // Initialize the Select2 library with tagging
+            select.select2({
+                tags: true,
+                tokenSeparators: [',', ' ']
+            });
+
+            // Add dynamic options
+            $.each(columns, function(index, value) {
+                select.append($('<option>').text(value).attr('value', value));
+            });
+        });
+    });
+
+    // Function to get selected data
+    function getData() {
+        var selectedColumns = $('#columns').val();
+        $.post('/get_data', { columns: selectedColumns }, function(data) {
+            $('#result').html(data);
+        });
+    }
+</script>
+
+</body>
+</html>
