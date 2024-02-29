@@ -50,7 +50,7 @@
     // Function to get selected data
     function getData() {
         var selectedColumns = $('#columns').val();
-        $.post('/get_data', { columns: selectedColumns }, function(data) {
+        $.post('/get_data', { columns: Disease }, function(data) {
             $('#result').html(data);
         });
     }
