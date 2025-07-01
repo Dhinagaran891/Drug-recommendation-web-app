@@ -102,6 +102,17 @@
             });
         }
     </script>
+    <section id="contact" style="margin-top: 50px; width: 100%; max-width: 800px;">
+    <h2 style="text-align: center; color: #333;">Contact Us</h2>
+    <form id="contactForm" style="display: flex; flex-direction: column; gap: 15px; background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
+        <input type="text" id="name" placeholder="Your Name" required style="padding: 10px; border: 1px solid #ccc; border-radius: 6px;">
+        <input type="email" id="email" placeholder="Your Email" required style="padding: 10px; border: 1px solid #ccc; border-radius: 6px;">
+        <textarea id="message" placeholder="Your Message" rows="5" required style="padding: 10px; border: 1px solid #ccc; border-radius: 6px;"></textarea>
+        <button type="submit" style="padding: 10px; background-color: #2196f3; color: white; border: none; border-radius: 6px; cursor: pointer;">Send Message</button>
+    </form>
+    <p id="contactResponse" style="text-align: center; margin-top: 15px; color: green;"></p>
+</section>
+
 
 </body>
 </html>
