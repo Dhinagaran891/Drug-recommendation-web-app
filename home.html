@@ -1,81 +1,107 @@
-<!-- project-folder/templates/index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CSV Data Viewer</title>
+
+    <!-- Select2 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc0/dist/css/select2.min.css" rel="stylesheet" />
+
+    <!-- jQuery and Select2 JS -->
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc0/dist/js/select2.min.js"></script>
+
     <style>
-        /* Add any additional styling here */
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(270deg, #d0f0c0, #a0e7f9);
+            background-size: 400% 400%;
+            animation: gradientBG 10s ease infinite;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        form {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        #result {
+            margin-top: 30px;
+            width: 100%;
+            max-width: 800px;
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
     </style>
 </head>
 <body>
 
-<h1>CSV Data Viewer</h1>
+    <h1>CSV Data Viewer</h1>
 
-<form id="columnForm">
-    <label for="columns">Select Columns:</label>
-    <select id="columns" multiple="multiple" style="width: 100%;">
-        <!-- Dynamically populated with column names -->
-    </select>
-    <br>
-    <button type="button" onclick="getData()">Get Data</button>
-</form>
+    <form id="columnForm">
+        <label for="columns">Select Columns:</label>
+        <select id="columns" multiple="multiple" style="width: 100%;"></select>
+        <br>
+        <button type="button" onclick="getData()">Get Data</button>
+    </form>
 
-<div id="result"></div>
+    <div id="result"></div>
 
-<script>
-    // Fetch column names and populate the multiselect dropdown with tagging/search bar
-    $(document).ready(function() {
-        $.get('/get_columns', function(data) {
-            var columns = JSON.parse(data);
-            var select = $('#columns');
-        
-            // Initialize the Select2 library with tagging
-            select.select2({
-                tags: true,
-                tokenSeparators: [',', ' ']
-            });
+    <script>
+        // Populate columns on page load
+        $(document).ready(function() {
+            $.get('/get_columns', function(data) {
+                const columns = JSON.parse(data);
+                const select = $('#columns');
+                select.select2({
+                    tags: true,
+                    tokenSeparators: [',', ' ']
+                });
 
-            // Add dynamic options
-            $.each(columns, function(index, value) {
-                select.append($('<option>').text(value).attr('value', value));
+                $.each(columns, function(index, value) {
+                    select.append($('<option>').text(value).attr('value', value));
+                });
             });
         });
-    });
 
-    // Function to get selected data
-    function getData() {
-        var selectedColumns = $('#columns').val();
-        $.post('/get_data', { columns: Disease }, function(data) {
-            $('#result').html(data);
-        });
-    }
-    body {
-    font-family: 'Arial', sans-serif;
-    background: linear-gradient(270deg, #d0f0c0, #a0e7f9);
-    background-size: 400% 400%;
-    animation: gradientBG 10s ease infinite;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-}
-
-@keyframes gradientBG {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-}
-
-</script>
+        // Fetch data for selected columns
+        function getData() {
+            const selectedColumns = $('#columns').val();
+            $.post('/get_data', { columns: selectedColumns }, function(data) {
+                $('#result').html(data);
+            });
+        }
+    </script>
 
 </body>
 </html>
-
