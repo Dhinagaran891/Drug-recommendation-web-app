@@ -4,65 +4,72 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CSV Data Viewer</title>
-
-    <!-- Select2 CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc0/dist/css/select2.min.css" rel="stylesheet" />
-
-    <!-- jQuery and Select2 JS -->
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc0/dist/js/select2.min.js"></script>
 
-    <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            background: linear-gradient(270deg, #d0f0c0, #a0e7f9);
-            background-size: 400% 400%;
-            animation: gradientBG 10s ease infinite;
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-        }
+   <style>
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #c8e6c9; /* Light green */
+        color: white; /* Global text color */
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-height: 100vh;
+    }
 
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
+    h1, h2, label {
+        color: white;
+    }
 
-        form {
-            background: white;
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        }
+    form {
+        background: rgba(255, 255, 255, 0.1);
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        width: 100%;
+        max-width: 800px;
+    }
 
-        #result {
-            margin-top: 30px;
-            width: 100%;
-            max-width: 800px;
-            background: white;
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        }
+    select, input, textarea {
+        background-color: #e8f5e9;
+        color: #333;
+        border: 1px solid #ccc;
+        padding: 10px;
+        border-radius: 6px;
+    }
 
-        button {
-            margin-top: 10px;
-            padding: 10px 20px;
-            background-color: #4caf50;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-        }
+    #result {
+        margin-top: 30px;
+        width: 100%;
+        max-width: 800px;
+        background: rgba(255, 255, 255, 0.1);
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        color: white;
+    }
 
-        button:hover {
-            background-color: #45a049;
-        }
-    </style>
+    button {
+        margin-top: 10px;
+        padding: 10px 20px;
+        background-color: #388e3c; /* dark green */
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background-color: #2e7d32;
+    }
+
+    ::placeholder {
+        color: #666;
+    }
+</style>
+
 </head>
 <body>
 
